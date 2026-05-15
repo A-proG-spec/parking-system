@@ -12,7 +12,8 @@ int currentUserId = 0;
 string currentRole = "";
 bool isLoggedIn = false;
 
-void showMainMenu() {
+void showMainMenu()
+{
     cout << "\nSMART PARKING MANAGEMENT SYSTEM\n";
     cout << "1. Login\n";
     cout << "2. Register\n";
@@ -20,41 +21,49 @@ void showMainMenu() {
     cout << "Enter choice: ";
 }
 
-int main() {
-    MYSQL* conn = NULL;
-    if (!connectDatabase(conn)) {
+int main()
+{
+    MYSQL *conn = NULL;
+    if (!connectDatabase(conn))
+    {
         cout << "\nCannot connect to database\n";
         return 1;
     }
-    
+
     int choice;
     bool running = true;
-    
-    while (running) {
-        if (!isLoggedIn) {
+
+    while (running)
+    {
+        if (!isLoggedIn)
+        {
             showMainMenu();
             cin >> choice;
             string email, password, name, phone;
-            
-            if (choice == 1) {
+
+            if (choice == 1)
+            {
                 cout << "\nLOGIN\n";
                 cout << "Email: ";
                 cin >> email;
                 cout << "Password: ";
                 cin >> password;
-                if (loginUser(conn, email, password, currentUser, currentUserId, currentRole)) {
+                if (loginUser(conn, email, password, currentUser, currentUserId, currentRole))
+                {
                     isLoggedIn = true;
                 }
             }
-            else if (choice == 2) {
+            else if (choice == 2)
+            {
                 cout << "\nREGISTER\n";
-                
+
                 bool firstUser = isFirstUser(conn);
-                if (firstUser) {
+                if (firstUser)
+                {
                     cout << "You are the FIRST user to register!\n";
                     cout << "You will be registered as ADMINISTRATOR.\n\n";
                 }
-                
+
                 cout << "Full Name: ";
                 cin.ignore();
                 getline(cin, name);
@@ -64,34 +73,41 @@ int main() {
                 getline(cin, phone);
                 cout << "Password: ";
                 getline(cin, password);
-                
                 int vipChoice;
-                cout << "\nVIP Membership?\n";
-                cout << "1. Yes (Premium)\n";
-                cout << "2. No (Standard)\n";
-                cout << "Choice: ";
-                cin >> vipChoice;
-                
-                registerUser(conn, name, email, phone, password, vipChoice == 1);
+                if (!firstUser)
+                {
+
+                    cout << "\nVIP Membership?\n";
+                    cout << "1. Yes (Premium)\n";
+                    cout << "2. No (Standard)\n";
+                    cout << "Choice: ";
+                    cin >> vipChoice;
+                }
+                registerUser(conn, name, email, phone, password, vipChoice);
             }
-            else if (choice == 3) {
+            else if (choice == 3)
+            {
                 running = false;
                 cout << "\nThank you for using Smart Parking System!\n";
             }
-            else {
+            else
+            {
                 cout << "\nInvalid choice!\n";
             }
         }
-        else {
-            if (currentRole == "admin") {
+        else
+        {
+            if (currentRole == "admin")
+            {
                 adminDashboard(conn, currentUser, currentUserId, isLoggedIn);
             }
-            else {
+            else
+            {
                 customerDashboard(conn, currentUser, currentUserId, isLoggedIn);
             }
         }
     }
-    
+
     disconnectDatabase(conn);
     return 0;
 }

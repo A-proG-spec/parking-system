@@ -1,0 +1,1 @@
+g++ -o parking_system.exe main.cpp customer.cpp utils.cpp admin.cpp -I"C:\Program Files\MariaDB\MariaDB Connector C 64-bit\include" -L"C:\Program Files\MariaDB\MariaDB Connector C 64-bit\lib" -lmariadb

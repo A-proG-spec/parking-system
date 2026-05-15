@@ -10,7 +10,6 @@ void modifyParkingSlot(MYSQL *conn);
 void removeParkingSlot(MYSQL *conn);
 void setRateConfig(MYSQL *conn);
 void viewAllSlots(MYSQL *conn);
-void viewSystemStats(MYSQL *conn);
 void adminDashboard(MYSQL *conn, string &adminUser, int &adminId, bool &loggedIn);
 
 #endif
