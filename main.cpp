@@ -78,8 +78,8 @@ int main()
                 {
 
                     cout << "\nVIP Membership?\n";
+                    cout << "0. No (Standard)\n";
                     cout << "1. Yes (Premium)\n";
-                    cout << "2. No (Standard)\n";
                     cout << "Choice: ";
                     cin >> vipChoice;
                 }
